@@ -1,0 +1,24 @@
+package mainpackage;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MyClass<T>{
+	private List<T> list;
+
+	public MyClass(){
+		this.list = new ArrayList<>();
+	};
+
+	public void add(T value){
+		list.add(value);
+		list.stream()
+			.sorted();
+	}
+
+	public T get(){
+		T value = list.get(list.size() - 1);
+		list.remove(list.size() - 1);
+		return value;
+	}
+}

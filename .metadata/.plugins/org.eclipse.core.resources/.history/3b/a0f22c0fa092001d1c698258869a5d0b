@@ -1,0 +1,42 @@
+package mainpackage;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		List<Enrollment> enrollments = new ArrayList<Enrollment>();
+		 enrollments.add(new Enrollment("A111111A", "CS4101", 60));
+		 enrollments.add(new Enrollment("A111111A", "CS4102", 65));
+		 enrollments.add(new Enrollment("A111111A", "CS4104", 55));
+		 enrollments.add(new Enrollment("B222222B", "CS4101", 70));
+		 enrollments.add(new Enrollment("B222222B", "CS4103", 75));
+		 enrollments.add(new Enrollment("B222222B", "CS4104", 60));
+		 enrollments.add(new Enrollment("C333333C", "CS4101", 80));
+		 enrollments.add(new Enrollment("C333333C", "CS4102", 70));
+		 enrollments.add(new Enrollment("D444444D", "CS4104", 40));
+
+		 displayModules(enrollments);
+		 System.out.println(); // New line
+	}
+	
+	public static void displayModules(List<Enrollment> list){
+		List<String> modules = list.stream()
+			.map(x -> x.getModuleCode())
+			.distinct()
+			.sorted((x, y) -> x.compareTo(y))
+			.collect(Collectors.toList());
+		
+		for(String module:modules){
+			System.out.println(module);
+			list.stream()
+				.filter(x -> x.getModuleCode().equals(module))
+				.map(x -> x.getMatricNo())
+				.distinct()
+				.forEach(x -> System.out.println("\t" + x));
+		}
+	}
+}

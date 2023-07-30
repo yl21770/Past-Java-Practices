@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;lib&apos; to &apos;StudentApplication_jpql&apos;&#x0D;&#x0A;- Original project: &apos;ClubApplication_whsp_jpa&apos;&#x0D;&#x0A;- Destination element: &apos;StudentApplication_jpql&apos;&#x0D;&#x0A;- Original element: &apos;lib&apos;" description="Copy folder" element1="lib" files="0" flags="589830" folders="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1670139827409" target="/StudentApplication_jpql" units="0" version="1.0"/>
+</session>

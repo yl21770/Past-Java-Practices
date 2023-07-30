@@ -1,0 +1,322 @@
+package mainpackage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class MainClass {
+	
+	private String name;
+	 public MainClass(String name) { this.name = name; };
+	 public String toString() { return name; } 
+
+	public static void main(String[] args) {
+		method9();
+	}
+	
+	public static void method9() {
+		TwoElement<Integer> i1 = new TwoElement<>(3, 4);
+		System.out.println(i1.getElement1() + " and " + i1.getElement2());
+		TwoElement<Integer> i2 = new TwoElement<>(4, 3);
+		System.out.println(i2.getElement1() + " and " + i2.getElement2());
+		TwoElement<Double> i3 = new TwoElement<>(2.2, 1.1);
+		System.out.println(i3.getElement1() + " and " + i3.getElement2());
+		TwoElement<Double> i4 = new TwoElement<>(1.1, 2.2);
+		System.out.println(i4.getElement1() + " and " + i4.getElement2());
+		TwoElement<String> i5 = new TwoElement<>("aa", "bb");
+		System.out.println(i5.getElement1() + " and " + i5.getElement2());
+		TwoElement<String> i6 = new TwoElement<>("bb", "aa");
+		System.out.println(i6.getElement1() + " and " + i6.getElement2());
+	}
+	
+	public static void method8() {
+		int[] arr = {1, 2, 5, 4, 3, 5, 4, 2, 4};
+		int number = Arrays.stream(arr)
+		.distinct()
+		.boxed()
+		.sorted(Comparator.reverseOrder())
+		.skip(1)
+		.findFirst()
+		.get();
+		
+		long count = Arrays.stream(arr)
+				.filter(x -> x == number)
+				.count();
+		
+		System.out.print(count);
+	}
+	
+	public static void method7() {
+		int checker = 100;
+		
+		for(int i = 1; i <= 1000; i++){
+			if(i%4 == 0 && i%5 == 0 && i%40 != 0){
+				System.out.print(i + " ");
+			}
+			
+			if(i % checker == 0){
+				System.out.println();
+				checker += 100;
+			}
+		}
+	}
+	
+	public static void methodx() {
+		String input = "}@VKT}";
+		String solution = "";
+		String origin = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:ZXCVBNM<>?";
+		String key ="~!QAZXSW@#EDCVFR$%ltTGBNHY^&UJM<KI*(OL>?:P)_{}+|`1qazxsw23edcvfr45gbnhy67ujm,ki89o./;p0-[']=\\";
+		
+		for(int i = 0; i<input.length(); i++) {
+			int index = origin.indexOf(input.charAt(i));
+			solution += key.charAt(index);
+		}
+		
+		System.out.println(solution);
+	}
+	
+	public static void method6() {
+		Trader federer = new Trader("Federer", "Singapore");
+		 Trader asher = new Trader("Asher", "Singapore");
+		 Trader elliot = new Trader("Elliot", "Tokyo");
+		 Trader ryan = new Trader("Ryan", "New York");
+		 Trader lucas = new Trader("Lucas", "Tokyo");
+
+		 Transaction[] transactionArr = {
+		 new Transaction(federer, 2002, 500),
+		 new Transaction(asher, 2002, 4500),
+		 new Transaction(elliot, 2000, 1000),
+		 new Transaction(federer, 2001, 3000),
+		 new Transaction(ryan, 2000, 2000),
+		 new Transaction(lucas, 2003, 3500),
+		 new Transaction(elliot, 2001, 3000),
+		 };
+
+		 List<Transaction> transactionList = arrToList(transactionArr);
+		 sortTransactionsByValue(transactionList);
+		 transactionList.forEach(System.out::println);
+
+		 System.out.println(); // Empty line
+		 Set<Transaction> transactionSet = arrToSet(transactionArr);
+		 List<Transaction> transactionList2 =
+		 sortTransactionsByTraderName(transactionSet);
+		 transactionList2.forEach(System.out::println);
+
+		 System.out.println(); // Empty line
+		 List<Transaction> transactionList3 = arrToList(transactionArr);
+		 printCitiesAndBestTraders(transactionList3);
+	}
+	
+	public static void printCitiesAndBestTraders(List<Transaction> list) {
+		list.stream()
+			.map(x -> x.getTrader().getCity())
+			.distinct()
+			.sorted()
+			.forEach(x -> {
+				System.out.println(x);
+				list.stream()
+					.filter(y -> y.getTrader().getCity().equals(x))
+					.collect(Collectors.groupingBy(y -> y.getTrader().getName(), Collectors.summingInt(Transaction::getValue)))
+					.entrySet()
+					.stream()
+					.max((a, b) -> a.getValue() - b.getValue())
+					.ifPresent(y -> System.out.println("\tTrader " + y.getKey() + ", total " + y.getValue()));
+			});
+	}
+	
+	public static List<Transaction> sortTransactionsByTraderName(Set<Transaction> set){
+		List<Transaction> list = new ArrayList<>(set);
+		Collections.sort(list);
+		return list;
+	}
+	
+	public static void sortTransactionsByValue(List<Transaction> list){
+		Collections.sort(list, new Comparator<Transaction>() {
+			@Override
+			public int compare(Transaction t1, Transaction t2) {
+				return Integer.compare(t1.getValue(), t2.getValue());
+			}
+		});
+	}
+	
+	public static List<Transaction> arrToList(Transaction[] arr) {
+		 return Arrays.asList(arr);	
+		}
+		public static Set<Transaction> arrToSet(Transaction[] arr) {
+		 return Set.of(arr);
+		}
+	
+	public static void method5() {
+		MyClass2<Integer> intObj = new MyClass2<>();
+		 intObj.add(1);
+		 intObj.add(2);
+		 intObj.add(3);
+		 System.out.println(intObj.get());
+		 System.out.println(intObj.get());
+		 System.out.println(intObj.get());
+		 System.out.println(); // New line
+
+		 MyClass2<Double> dblObj = new MyClass2<>();
+		 dblObj.add(3.3);
+		 dblObj.add(1.1);
+		 System.out.println(dblObj.get());
+		 dblObj.add(2.2);
+		 System.out.println(dblObj.get());
+		 System.out.println(dblObj.get());
+		 System.out.println(); // New line
+
+		 MyClass2<MainClass> aClassObj = new MyClass2<>();
+		 aClassObj.add(new MainClass("oop"));
+		 aClassObj.add(new MainClass("sql"));
+		 System.out.println(aClassObj.get());
+		 System.out.println(aClassObj.get());
+		 aClassObj.add(new MainClass("asp.net"));
+		 System.out.println(aClassObj.get()); 
+	}
+	
+	public static void method4() {
+		Product[] productArr = {
+				 new Product(1, "Farm Railway Set", "Toy", 75.9),
+				 new Product(2, "Data Structures", "Book", 75.00),
+				 new Product(3, "Laptop Desks", "Office", 139.0),
+				 new Product(4, "Lego City", "Toy", 62.0),
+				 new Product(5, "Foldable Table", "Office", 47.9),
+				 new Product(6, "Jigsaw Puzzle", "Toy", 20.0),
+				 new Product(7, "Java How To Program", "Book", 80.5),
+				 new Product(8, "ASP.NET Core in Action", "Book", 50.5),
+				 new Product(9, "Office Chair", "Office", 57.7)
+				 };
+				 List<Product> productList = Arrays.asList(productArr);
+				 List<Product> searchResult = search(productList, "Toy", 62.0);
+				 System.out.println(searchResult);
+				 System.out.println(); // New line
+
+				 printByCategory(productList);
+	}
+	
+	public static void printByCategory(List<Product> productList){
+	productList.stream()
+		.sorted(Comparator.comparing(Product::getPrice).reversed())
+		.map(x -> x.getCategory())
+		.distinct()
+		.forEach(x -> {
+			System.out.println(x);
+			productList.stream()
+				.filter(y -> y.getCategory().equals(x))
+				.sorted(Comparator.comparing(Product::getPrice).reversed())
+				.limit(2)
+				.forEach(y -> System.out.println("\t" + y));
+		});
+}
+
+	
+	public static List<Product> search(List<Product> productList, String category, double price){
+		List<Product> result = productList.stream()
+				.filter(x -> x.getCategory().equals(category) && x.getPrice() <= price)
+				.collect(Collectors.toList());
+		return result;
+	}
+
+	
+	public static void method3() {
+		String[] fruits = {"Lychee", "Apple", "Strawberries", "Mango", "Banana", "Peaches", "Honeydew", "Cherries",
+				"Avocado", "Guava", "Watermelon", "Kiwi", "Soursop", "Tamarind", "Plums", "Pear", "Durian",
+				"Blackberries", "Pineapple", "Mandarin", "Nectarine", "Papaya"};
+		
+		int count = 0;
+
+		for(String word:fruits){
+			if(word.startsWith("P") || word.length() < 6){
+				count++;
+				if(count > 4){
+					System.out.println();
+					count = 1;
+				}
+				System.out.print(word + " ");
+			}
+		}
+
+	}
+	
+	public static void method2() {
+		MyClass<Integer> intObj = new MyClass<>();
+		 intObj.add(2);
+		 intObj.add(1);
+		 intObj.add(3);
+		 System.out.println(intObj.get());
+		 System.out.println(intObj.get());
+		 System.out.println(intObj.get());
+		 System.out.println(); // New line
+
+		 MyClass<Double> douObj = new MyClass<>();
+		 douObj.add(3.3);
+		 douObj.add(1.1);
+		 douObj.add(2.2);
+		 System.out.println(douObj.get());
+		 System.out.println(douObj.get());
+		 System.out.println(douObj.get());
+		 System.out.println(); // New line
+
+		 MyClass<String> strObj = new MyClass<>();
+		 strObj.add("aaa");
+		 strObj.add("ccc");
+		 strObj.add("bbb");
+		 System.out.println(strObj.get());
+		 strObj.add("ddd");
+		 System.out.println(strObj.get());
+		 System.out.println(strObj.get());
+		 System.out.println(strObj.get());
+	}
+	
+	public static void method1() {
+		List<Enrollment> enrollments = new ArrayList<Enrollment>();
+		 enrollments.add(new Enrollment("A111111A", "CS4101", 60));
+		 enrollments.add(new Enrollment("A111111A", "CS4102", 65));
+		 enrollments.add(new Enrollment("A111111A", "CS4104", 55));
+		 enrollments.add(new Enrollment("B222222B", "CS4101", 70));
+		 enrollments.add(new Enrollment("B222222B", "CS4103", 75));
+		 enrollments.add(new Enrollment("B222222B", "CS4104", 60));
+		 enrollments.add(new Enrollment("C333333C", "CS4101", 80));
+		 enrollments.add(new Enrollment("C333333C", "CS4102", 70));
+		 enrollments.add(new Enrollment("D444444D", "CS4104", 40));
+
+		 displayModules(enrollments);
+		 System.out.println(); // New line
+		 
+		 System.out.println("Average score for CS4101 " +
+				 averageScore(enrollments, "CS4101"));
+				 System.out.println("Average score for CS4102 " +
+				 averageScore(enrollments, "CS4102"));
+	}
+	
+	public static void displayModules(List<Enrollment> list){
+		List<String> modules = list.stream()
+			.map(x -> x.getModuleCode())
+			.distinct()
+			.sorted((x, y) -> x.compareTo(y))
+			.collect(Collectors.toList());
+		
+		for(String module:modules){
+			System.out.println(module);
+			list.stream()
+				.filter(x -> x.getModuleCode().equals(module))
+				.map(x -> x.getMatricNo())
+				.distinct()
+				.forEach(x -> System.out.println("\t" + x));
+		}
+	}
+	
+	public static double averageScore(List<Enrollment> list, String module) {
+		double avg = list.stream()
+				.filter(x -> x.getModuleCode() == module)
+				.mapToDouble(x -> x.getScore())
+				.average()
+				.getAsDouble();
+		return avg;
+	}
+}

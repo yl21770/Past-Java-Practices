@@ -1,0 +1,90 @@
+package mainpackage;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		method2();
+	}
+	
+	public static void method2() {
+		MyClass<Integer> intObj = new MyClass<>();
+		 intObj.add(2);
+		 intObj.add(1);
+		 intObj.add(3);
+		 System.out.println(intObj.get());
+		 System.out.println(intObj.get());
+		 System.out.println(intObj.get());
+		 System.out.println(); // New line
+
+		 MyClass<Double> douObj = new MyClass<>();
+		 douObj.add(3.3);
+		 douObj.add(1.1);
+		 douObj.add(2.2);
+		 System.out.println(douObj.get());
+		 System.out.println(douObj.get());
+		 System.out.println(douObj.get());
+		 System.out.println(); // New line
+
+		 MyClass<String> strObj = new MyClass<>();
+		 strObj.add("aaa");
+		 strObj.add("ccc");
+		 strObj.add("bbb");
+		 System.out.println(strObj.get());
+		 strObj.add("ddd");
+		 System.out.println(strObj.get());
+		 System.out.println(strObj.get());
+		 System.out.println(strObj.get());
+	}
+	
+	public static void method1() {
+		List<Enrollment> enrollments = new ArrayList<Enrollment>();
+		 enrollments.add(new Enrollment("A111111A", "CS4101", 60));
+		 enrollments.add(new Enrollment("A111111A", "CS4102", 65));
+		 enrollments.add(new Enrollment("A111111A", "CS4104", 55));
+		 enrollments.add(new Enrollment("B222222B", "CS4101", 70));
+		 enrollments.add(new Enrollment("B222222B", "CS4103", 75));
+		 enrollments.add(new Enrollment("B222222B", "CS4104", 60));
+		 enrollments.add(new Enrollment("C333333C", "CS4101", 80));
+		 enrollments.add(new Enrollment("C333333C", "CS4102", 70));
+		 enrollments.add(new Enrollment("D444444D", "CS4104", 40));
+
+		 displayModules(enrollments);
+		 System.out.println(); // New line
+		 
+		 System.out.println("Average score for CS4101 " +
+				 averageScore(enrollments, "CS4101"));
+				 System.out.println("Average score for CS4102 " +
+				 averageScore(enrollments, "CS4102"));
+	}
+	
+	public static void displayModules(List<Enrollment> list){
+		List<String> modules = list.stream()
+			.map(x -> x.getModuleCode())
+			.distinct()
+			.sorted((x, y) -> x.compareTo(y))
+			.collect(Collectors.toList());
+		
+		for(String module:modules){
+			System.out.println(module);
+			list.stream()
+				.filter(x -> x.getModuleCode().equals(module))
+				.map(x -> x.getMatricNo())
+				.distinct()
+				.forEach(x -> System.out.println("\t" + x));
+		}
+	}
+	
+	public static double averageScore(List<Enrollment> list, String module) {
+		double avg = list.stream()
+				.filter(x -> x.getModuleCode() == module)
+				.mapToDouble(x -> x.getScore())
+				.average()
+				.getAsDouble();
+		return avg;
+	}
+}

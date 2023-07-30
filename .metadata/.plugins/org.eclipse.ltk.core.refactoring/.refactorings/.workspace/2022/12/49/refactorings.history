@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;JPA_1&apos; to &apos;ClubApplication_whsp_jpa&apos;" description="Rename resource &apos;JPA_1&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/JPA_1" name="ClubApplication_whsp_jpa" stamp="1669953455578" updateReferences="true"/>
+</session>
